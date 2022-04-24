@@ -116,10 +116,10 @@ export class BDSNav extends HTMLElement {
           position: absolute;
         }
         .menu-label span::before {
-          bottom: 26px;
+          bottom: 2rem;
         }
         .menu-label span::after {
-          top: 26px;
+          top: 2rem;
         }
 
         @media screen and (min-width: 800px) {
@@ -179,7 +179,7 @@ export class BDSNav extends HTMLElement {
         }
       </style>
       <header>
-        <h2 class="logo">BookDataSolutions</h2>
+        <h1 class="logo">BookDataSolutions</h1>
         <input type="checkbox" class="menu" id="menu">
         <label for="menu" class="menu-label"<span><span></label>
         <nav>
