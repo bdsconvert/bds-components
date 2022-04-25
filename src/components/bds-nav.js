@@ -191,9 +191,12 @@ export class BDSNav extends HTMLElement {
     `;
     //<label for="menu" class="menu-label">☰</label>
 
-    // this.shadowRoot.addEventListener("click", (e) => {
-    //   console.log(e.target.innerText);
-    // });
+    this.shadowRoot.addEventListener("click", (e) => {
+      if (e.composedPath()[1].id) {
+        // tag <a> has the id
+        this.shadowRoot.getElementById("menu").checked = false; // close sidebar when the menu item is selected
+      }
+    });
   }
 }
 window.customElements.define("bds-nav", BDSNav);

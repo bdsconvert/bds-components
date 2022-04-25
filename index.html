@@ -16,6 +16,11 @@
       );
     }
 
+    main {
+      position: relative;
+      margin-left: 2rem;
+    }
+
     #launch-dialog {
       background: tomato;
       border-radius: 4px;
@@ -33,11 +38,11 @@
     <header></header>
     <main></main>
     <bds-modal></bds-modal>
-
+    <!-- 
     <div class="samples">
       <h3>Dialog Template Example</h3>
       <button id="launch-dialog">BDS Signon</button>
-    </div>
+    </div> -->
 
     <script>
       const navItems = `[
@@ -48,33 +53,26 @@
             {"item":"Register","icon":"../assets/register.png"}
       ]`;
       const bdsComponents = {
-        Home: "Home not Implemented!",
-        Contact: "Contact not Implemented!",
-        Signon: "<bds-signon></bds-signon>",
-        Signoff: "Signoff not Implemented!",
-        Register: "Register not Implemented!"
+        Home: { component: "Home not Implemented!", target: "main" },
+        Contact: { component: "Contact not Implemented!", target: "main" },
+        Signon: { component: "<bds-signon></bds-signon>", target: "bds-modal" },
+        Signoff: { component: "Signoff not Implemented!", target: "main" },
+        Register: { component: "Register not Implemented!", target: "main" }
       };
       document.querySelector(
         "header"
-      ).innerHTML = `<bds-nav id="bdsNav" nav-items='${navItems}' display="icons"></bds-nav>`;
+      ).innerHTML = `<bds-nav id="bdsNav" nav-items='${navItems}' display=""></bds-nav>`;
       bdsNav.onclick = (e) => {
         // e.composedPath[0] => SPAN/IMG, e.composedPath[1] => A => works for both IMG and SPAN children
         const launch = e.composedPath()[1].id;
         if (bdsComponents[launch]) {
-          document.querySelector("main").innerHTML = `${bdsComponents[launch]}`;
-          //   document.querySelector("bds-modal"
-          //   ).innerHTML = `${bdsComponents[launch]}`;
-          //   document.querySelector("bds-modal").open = true;
+          const { component, target } = bdsComponents[launch];
+          document.querySelector(`${target}`).innerHTML = `${component}`;
+          if (target === "bds-modal")
+            document.querySelector(`${target}`).open = true;
         }
       };
       ///////////////////////////////////////////////////////////////////////////////////////////
-      const button = document.getElementById("launch-dialog");
-      button.addEventListener("click", () => {
-        document.querySelector(
-          "bds-modal"
-        ).innerHTML = `<bds-signon></bds-signon>`;
-        document.querySelector("bds-modal").open = true;
-      });
 
       document
         .querySelector("bds-modal")
