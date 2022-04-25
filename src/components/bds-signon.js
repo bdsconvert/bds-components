@@ -7,7 +7,7 @@ export class BDSSignon extends HTMLElement {
           margin: 1rem;
         }
       </style>
-      <h1>Sign On</h1>
+      <h2>Sign On</h2>
       <form class="signon">
         <label for="email">Email:</label>
         <input type="email" name="email" placeholder="Your Registered Email" required />

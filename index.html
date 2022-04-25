@@ -15,6 +15,7 @@
         rgba(220, 220, 220, 0.5)
       );
     }
+
     #launch-dialog {
       background: tomato;
       border-radius: 4px;
@@ -30,23 +31,14 @@
   </style>
   <body>
     <header></header>
-    <!-- <bds-nav
-      id="bdsNav"
-      nav-items='[
-        {"item":"Home","icon":"../assets/home.png"},
-        {"item":"Contact","icon":"../assets/contact.png"},
-        {"item":"Signon","icon":"../assets/signon.png"},
-        {"item":"Register","icon":"../assets/register.png"}
-      ]'
-    ></bds-nav> -->
-    <!-- <bds-modal>
-      <bds-signon></bds-signon>
-    </bds-modal> -->
+    <main></main>
+    <bds-modal></bds-modal>
 
-    <!-- <div id="app">
+    <div class="samples">
       <h3>Dialog Template Example</h3>
       <button id="launch-dialog">BDS Signon</button>
-    </div> -->
+    </div>
+
     <script>
       const navItems = `[
             {"item":"Home","icon":"../assets/home.png"},
@@ -56,30 +48,40 @@
             {"item":"Register","icon":"../assets/register.png"}
       ]`;
       const bdsComponents = {
-        Home: "BDSHome",
-        Contact: "BDSContact",
-        Signon: "BDSSignon",
-        Signoff: "BDSSignoff",
-        Register: "BDSRegister"
+        Home: "Home not Implemented!",
+        Contact: "Contact not Implemented!",
+        Signon: "<bds-signon></bds-signon>",
+        Signoff: "Signoff not Implemented!",
+        Register: "Register not Implemented!"
       };
       document.querySelector(
         "header"
-      ).innerHTML = `<bds-nav id="bdsNav" nav-items='${navItems}' display=""></bds-nav>`;
+      ).innerHTML = `<bds-nav id="bdsNav" nav-items='${navItems}' display="icons"></bds-nav>`;
       bdsNav.onclick = (e) => {
         // e.composedPath[0] => SPAN/IMG, e.composedPath[1] => A => works for both IMG and SPAN children
         const launch = e.composedPath()[1].id;
-        console.log("Launching ", bdsComponents[launch]);
+        if (bdsComponents[launch]) {
+          document.querySelector("main").innerHTML = `${bdsComponents[launch]}`;
+          //   document.querySelector("bds-modal"
+          //   ).innerHTML = `${bdsComponents[launch]}`;
+          //   document.querySelector("bds-modal").open = true;
+        }
       };
-      // const button = document.getElementById("launch-dialog");
-      // button.addEventListener("click", () => {
-      //   document.querySelector("bds-modal").open = true;
-      // });
+      ///////////////////////////////////////////////////////////////////////////////////////////
+      const button = document.getElementById("launch-dialog");
+      button.addEventListener("click", () => {
+        document.querySelector(
+          "bds-modal"
+        ).innerHTML = `<bds-signon></bds-signon>`;
+        document.querySelector("bds-modal").open = true;
+      });
 
-      // document
-      //   .querySelector("bds-modal")
-      //   .addEventListener("bds-modal-closed", (e) => {
-      //     console.log("BDSModal Closed!");
-      //   });
+      document
+        .querySelector("bds-modal")
+        .addEventListener("bds-modal-closed", (e) => {
+          console.log("BDSModal Closed!");
+        });
+      ///////////////////////////////////////////////////////////////////////////////////////////
     </script>
 
     <script type="module" src="src/components/bds-nav.js"></script>

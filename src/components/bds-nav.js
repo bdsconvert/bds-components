@@ -17,7 +17,7 @@ export class BDSNav extends HTMLElement {
           : this.display === "icons"
           ? icons
           : `${icons}${labels}`;
-      navlist += `<li><a href="#" id=${list.item}>${menudisplay}</span></a></li>`;
+      navlist += `<li><a href="#" id=${list.item} title="${list.item}">${menudisplay}</span></a></li>`;
     });
     //rgba(85, 214, 170, 0.85)
     this.shadowRoot.innerHTML = `
@@ -28,8 +28,9 @@ export class BDSNav extends HTMLElement {
         header {
           background: var(--background);
           text-align: center;
-          position: fixed;
+          position:relative;
           width: 100%;
+          padding: 0.25rem;
           z-index: 999;
         }
         nav {
@@ -42,7 +43,6 @@ export class BDSNav extends HTMLElement {
           transform: translateX(-100%);
           transition: transform 400ms ease-in-out;
           text-align: center;
-          min-height: 100vh;
         }
         nav ul {
           margin: 0;
@@ -116,10 +116,10 @@ export class BDSNav extends HTMLElement {
           position: absolute;
         }
         .menu-label span::before {
-          bottom: 2rem;
+          bottom: 2.25rem;
         }
         .menu-label span::after {
-          top: 2rem;
+          top: 2.25rem;
         }
 
         @media screen and (min-width: 800px) {
