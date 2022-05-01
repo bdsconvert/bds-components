@@ -18,7 +18,8 @@
 
     main {
       position: relative;
-      margin-left: 2rem;
+      display: grid;
+      justify-items: center;
     }
 
     #launch-dialog {
@@ -35,6 +36,7 @@
     }
   </style>
   <body>
+    <bds-idlewatch bds-idletimeout="6000"></bds-idlewatch>
     <header></header>
     <main></main>
     <bds-modal></bds-modal>
@@ -50,14 +52,31 @@
             {"item":"Contact","icon":"../assets/contact.png"},
             {"item":"Signon","icon":"../assets/signon.png"},
             {"item":"Signoff","icon":"../assets/signoff.png"},
-            {"item":"Register","icon":"../assets/register.png"}
+            {"item":"Register","icon":"../assets/register.png"},
+            {"item":"Home","icon":"../assets/home.png"},
+            {"item":"Home","icon":"../assets/home.png"},
+            {"item":"Home","icon":"../assets/home.png"},
+            {"item":"Home","icon":"../assets/home.png"}
       ]`;
       const bdsComponents = {
-        Home: { component: "Home not Implemented!", target: "main" },
-        Contact: { component: "Contact not Implemented!", target: "main" },
+        Home: { component: "<h1>Home not Implemented!</h1>", target: "main" },
+        Contact: {
+          component: "<h1>Contact not Implemented!</h1>",
+          target: "main"
+        },
         Signon: { component: "<bds-signon></bds-signon>", target: "bds-modal" },
-        Signoff: { component: "Signoff not Implemented!", target: "main" },
-        Register: { component: "Register not Implemented!", target: "main" }
+        Signoff: {
+          component: "<h1>Signoff not Implemented!</h1>",
+          target: "main"
+        },
+        Register: {
+          component: "<h1>Register not Implemented!</h1>",
+          target: "main"
+        },
+        Home: { component: "<h1>Home not Implemented!</h1>", target: "main" },
+        Home: { component: "<h1>Home not Implemented!</h1>", target: "main" },
+        Home: { component: "<h1>Home not Implemented!</h1>", target: "main" },
+        Home: { component: "<h1>Home not Implemented!</h1>", target: "main" }
       };
       document.querySelector(
         "header"
@@ -80,10 +99,13 @@
           console.log("BDSModal Closed!");
         });
       ///////////////////////////////////////////////////////////////////////////////////////////
+
+      // Idle time detection
     </script>
 
     <script type="module" src="src/components/bds-nav.js"></script>
     <script type="module" src="src/components/bds-signon.js"></script>
     <script type="module" src="src/components/bds-modal.js"></script>
+    <script type="module" src="src/components/bds-idlewatch.js"></script>
   </body>
 </html>

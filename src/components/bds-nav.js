@@ -30,19 +30,19 @@ export class BDSNav extends HTMLElement {
           text-align: center;
           position:relative;
           width: 100%;
-          padding: 0.25rem;
+          padding: 0.1rem 1rem 0.1rem 1rem;
           z-index: 999;
         }
         nav {
           position: absolute;
           text-align: left;
-          top: 100%;
           left: 0;
           background: var(--background);
           transform: scale(1,0);
           transform: translateX(-100%);
           transition: transform 400ms ease-in-out;
           text-align: center;
+          height:100vh;
         }
         nav ul {
           margin: 0;
@@ -128,17 +128,20 @@ export class BDSNav extends HTMLElement {
           }
           header {
             display: grid;
-            grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
+            grid-template-columns: auto;
           }
           .logo {
-            grid-column: 2 / 3;
+            grid-column: 1 / 2;
+            display: flex;
+            align-items: flex-start;
           }
           nav {
             all: unset;
-            grid-column: 3 / 4;
             display: flex;
+            grid-column: 2 / 4;
             justify-content: flex-end;
             align-items: center;
+            padding-right:1rem;
           }
           nav a {
             opacity: 1;
@@ -150,7 +153,6 @@ export class BDSNav extends HTMLElement {
             display: flex;
           }
           nav li {
-            margin-left: 1rem;
             margin-bottom: 0;
             border: none;
           }
@@ -190,6 +192,7 @@ export class BDSNav extends HTMLElement {
       </header>
     `;
     //<label for="menu" class="menu-label">☰</label>
+    //grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
 
     this.shadowRoot.addEventListener("click", (e) => {
       if (e.composedPath()[1].id) {
