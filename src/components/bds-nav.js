@@ -4,6 +4,7 @@ export class BDSNav extends HTMLElement {
     this.attachShadow({ mode: "open" });
     this.bdsnav = JSON.parse(this.getAttribute("nav-items"));
     this.display = this.getAttribute("display");
+    this.logo = this.getAttribute("logo");
   }
   connectedCallback() {
     // const { shadowRoot } = this;
@@ -11,12 +12,7 @@ export class BDSNav extends HTMLElement {
     this.bdsnav.forEach((list) => {
       const labels = `<span>${list.item}</span>`;
       const icons = `<img src="${list.icon}">`;
-      const menudisplay =
-        this.display === "labels"
-          ? labels
-          : this.display === "icons"
-          ? icons
-          : `${icons}${labels}`;
+      const menudisplay = this.display === "labels" ? labels : this.display === "icons" ? icons : `${icons}${labels}`;
       navlist += `<li><a href="#" id=${list.item} title="${list.item}">${menudisplay}</span></a></li>`;
     });
     //rgba(85, 214, 170, 0.85)
@@ -181,7 +177,7 @@ export class BDSNav extends HTMLElement {
         }
       </style>
       <header>
-        <h1 class="logo">BookDataSolutions</h1>
+        <h1 class="logo">${this.logo}</h1>
         <input type="checkbox" class="menu" id="menu">
         <label for="menu" class="menu-label"<span><span></label>
         <nav>
