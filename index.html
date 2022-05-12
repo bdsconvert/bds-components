@@ -36,7 +36,7 @@
     }
   </style>
   <body>
-    <bds-idlewatch bds-idletimeout="6000"></bds-idlewatch>
+    <bds-idlewatch bds-idletimeout="10000" signedin="true"></bds-idlewatch>
     <header></header>
     <main></main>
     <bds-modal></bds-modal>
@@ -66,7 +66,7 @@
         },
         Signon: { component: "<bds-signon></bds-signon>", target: "bds-modal" },
         Signoff: {
-          component: "<h1>Signoff not Implemented!</h1>",
+          component: "<h1>Your are now Logged off!</h1>",
           target: "main"
         },
         Register: {
@@ -93,11 +93,12 @@
       };
       ///////////////////////////////////////////////////////////////////////////////////////////
 
-      document
-        .querySelector("bds-modal")
-        .addEventListener("bds-modal-closed", (e) => {
-          console.log("BDSModal Closed!");
-        });
+      // document
+      //   .querySelector("bds-modal")
+      //   .addEventListener("bds-modal-closed", (e) => {
+      //     console.log("Resetting Pointer Events...");
+      //     document.querySelector("bds-nav").style.pointerEvents = "auto";
+      //   });
       ///////////////////////////////////////////////////////////////////////////////////////////
 
       // Idle time detection

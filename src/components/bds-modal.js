@@ -29,22 +29,23 @@ export class BDSModal extends HTMLElement {
         justify-content: center;
         height: 100vh;
         position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         opacity: 1;
         visibility: visible;
       }
       .overlay {
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(100, 100, 100, 0.8);
         height: 100%;
         position: fixed;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
         width: 100%;
+        pointer-events: none;
       }
       .dialog {
         background: #ffffff;
@@ -58,8 +59,8 @@ export class BDSModal extends HTMLElement {
         cursor: pointer;
         font-size: 1.25rem;
         position: absolute;
-          top: 1rem;
-          right: 1rem;
+        top: 1rem;
+        right: 1rem;
       }
       button:focus {
         border: 2px solid blue;
@@ -78,8 +79,12 @@ export class BDSModal extends HTMLElement {
     this.open = this.open;
   }
   disconnectedCallback() {
-    this.shadowRoot.querySelector("button").removeEventListener("click", this.close);
-    this.shadowRoot.querySelector(".overlay").removeEventListener("click", this.close);
+    this.shadowRoot
+      .querySelector("button")
+      .removeEventListener("click", this.close);
+    this.shadowRoot
+      .querySelector(".overlay")
+      .removeEventListener("click", this.close);
   }
   get open() {
     return this.hasAttribute("open");
