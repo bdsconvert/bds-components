@@ -31,16 +31,21 @@
       margin: 1rem;
     }
   </style>
-  <body>
-    <bds-idlewatch bds-idletimeout="10000" signedin="true"></bds-idlewatch>
+  <body> 
+    <!-- <bds-idlewatch bds-idletimeout="10000" signedin="true"></bds-idlewatch> -->
     <header></header>
+   
     <main></main>
     <bds-modal></bds-modal>
     <!-- 
     <div class="samples">
       <h3>Dialog Template Example</h3>
       <button id="launch-dialog">BDS Signon</button>
-    </div> -->
+    </div> 
+    <details>
+      <summary>Details</summary>
+      Something small enough to escape casual notice.
+    </details>  -->
 
     <script>
       const navItems = `[
@@ -52,6 +57,14 @@
         {"item":"Register","icon":"../assets/register.png"},
         {"item":"Workque","icon":"../assets/home.png"}
       ]`;
+
+      const listItems = `[
+        {"filename": "Onixfile1.xml", "filetype":"Onix", "filesize":"50", "loaded":"${Date.now()}"},
+        {"filename": "Onixfile2.xml", "filetype":"Onix", "filesize":"80", "loaded":"${Date.now()}"},
+        {"filename": "Excelfile1.xslx", "filetype":"Excel", "filesize":"25", "loaded":"${Date.now()}"},
+        {"filename": "Excelfile1.xlsx", "filetype":"Excel", "filesize":"40", "loaded":"${Date.now()}"}
+      ]`;
+
       document.querySelector("header").innerHTML = `<bds-nav id="bdsNav" nav-items='${navItems}' display="" logo="BookDataSolutions"></bds-nav>`;
       const bdsComponents = {
         Home: { component: "<h1>Home not Implemented!</h1>", target: "main" },
@@ -60,7 +73,7 @@
         Signon: { component: "<bds-signon/>", target: "bds-modal" },
         Signoff: { component: "<h1>Your are now Logged off!</h1>", target: "main" },
         Register: { component: "<h1>Register not Implemented!</h1>", target: "main" },
-        Workque: { component: "<h1>Worqueue not Implemented!</h1>", target: "main" }
+        Workque: { component: `<bds-list list-hdr="My Workqueue" list-Items='${listItems}'></bds-list>`, target: "main" }
       };
       bdsNav.onclick = (e) => {
         // e.composedPath[0] => SPAN/IMG, e.composedPath[1] => A => works for both IMG and SPAN children
@@ -83,9 +96,10 @@
       // Idle time detection
     </script>
 
-    <script type="module" src="src/components/bds-nav.js"></script>
-    <script type="module" src="src/components/bds-signon.js"></script>
-    <script type="module" src="src/components/bds-modal.js"></script>
     <script type="module" src="src/components/bds-idlewatch.js"></script>
+    <script type="module" src="src/components/bds-nav.js"></script>
+    <script type="module" src="src/components/bds-modal.js"></script>
+    <script type="module" src="src/components/bds-signon.js"></script>
+    <script type="module" src="src/components/bds-list.js"></script>
   </body>
 </html>

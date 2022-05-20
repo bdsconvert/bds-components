@@ -19,7 +19,7 @@ export class BDSNav extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         :host {
-          --background: teal;
+          --background: #288;
         }
         header {
           background: var(--background);
@@ -28,6 +28,9 @@ export class BDSNav extends HTMLElement {
           width: 100%;
           padding: 0.1rem 1rem 0.1rem 1rem;
           z-index: 999;
+        }
+        .logo {
+          color:whitesmoke;
         }
         nav {
           position: absolute;
@@ -130,6 +133,7 @@ export class BDSNav extends HTMLElement {
             grid-column: 1 / 2;
             display: flex;
             align-items: flex-start;
+            color:whitesmoke;
           }
           nav {
             all: unset;
