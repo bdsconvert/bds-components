@@ -9,15 +9,29 @@
       font-family: Times, "Work Sans", sans-serif;
       margin: 0;
       font-weight: 400;
-      background-image: linear-gradient(to right, rgba(250, 250, 250, 0.5), rgba(220, 220, 220, 0.5));
+      /* background-image: linear-gradient(to right, rgba(250, 250, 250, 0.5), rgba(220, 220, 220, 0.5)); */
+     
+    }
+    h1, h2, h3 {
+      margin:0;
+      text-align: center;
+    }
+    header {
+      position:relative;
+      width: 100%;
     }
 
     main {
-      position: relative;
+      height: 75vh;
+      margin: 1rem;
+      overflow: scroll;
       display: grid;
-      justify-items: center;
+      justify-content: center;
     }
-
+    footer {
+      margin: 1rem;
+      text-align: center;
+    }
     #launch-dialog {
       background: tomato;
       border-radius: 4px;
@@ -34,20 +48,15 @@
   <body> 
     <!-- <bds-idlewatch bds-idletimeout="10000" signedin="true"></bds-idlewatch> -->
     <header></header>
-   
     <main></main>
+    <footer>Copyright 2022 - BookDataSolutions.com</footer>
     <bds-modal></bds-modal>
-    <!-- 
-    <div class="samples">
-      <h3>Dialog Template Example</h3>
-      <button id="launch-dialog">BDS Signon</button>
-    </div> 
-    <details>
-      <summary>Details</summary>
-      Something small enough to escape casual notice.
-    </details>  -->
-
+<!-- --------------------------------------------------------------------------- -->
     <script>
+      const bdsDate = (dt) => {
+        return dt ? new Date(dt).toISOString() : new Date().toISOString();
+      }
+      ///////////////////////////////////////////////////////////////////////////////////////////
       const navItems = `[
         {"item":"Home","icon":"../assets/home.png"},
         {"item":"Contact","icon":"../assets/contact.png"},
@@ -59,15 +68,31 @@
       ]`;
 
       const listItems = `[
-        {"filename": "Onixfile1.xml", "filetype":"Onix", "filesize":"50", "loaded":"${Date.now()}"},
-        {"filename": "Onixfile2.xml", "filetype":"Onix", "filesize":"80", "loaded":"${Date.now()}"},
-        {"filename": "Excelfile1.xslx", "filetype":"Excel", "filesize":"25", "loaded":"${Date.now()}"},
-        {"filename": "Excelfile1.xlsx", "filetype":"Excel", "filesize":"40", "loaded":"${Date.now()}"}
+        {"filename": "Onixfile1.xml", "filetype":"Onix", "filesize":"50", "loaded":"${bdsDate(Date.now())}"},
+        {"filename": "Excelfile1.xslx", "filetype":"Excel", "filesize":"25", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile2.xml", "filetype":"Onix", "filesize":"80", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile2.xlsx", "filetype":"Excel", "filesize":"40", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile3.xml", "filetype":"Onix", "filesize":"1", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile3.xlsx", "filetype":"Excel", "filesize":"2", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile4.xml", "filetype":"Onix", "filesize":"4", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile4.xlsx", "filetype":"Excel", "filesize":"8", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile5.xml", "filetype":"Onix", "filesize":"10", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile5.xlsx", "filetype":"Excel", "filesize":"20", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile6.xml", "filetype":"Onix", "filesize":"5", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile6.xlsx", "filetype":"Excel", "filesize":"10", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile7.xml", "filetype":"Onix", "filesize":"11", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile7.xlsx", "filetype":"Excel", "filesize":"22", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile8.xml", "filetype":"Onix", "filesize":"10", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile8.xlsx", "filetype":"Excel", "filesize":"20", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile9.xml", "filetype":"Onix", "filesize":"3", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile9.xlsx", "filetype":"Excel", "filesize":"6", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile10.xml", "filetype":"Onix", "filesize":"3", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile10.xlsx", "filetype":"Excel", "filesize":"3", "loaded":"${bdsDate()}"}
       ]`;
 
       document.querySelector("header").innerHTML = `<bds-nav id="bdsNav" nav-items='${navItems}' display="" logo="BookDataSolutions"></bds-nav>`;
       const bdsComponents = {
-        Home: { component: "<h1>Home not Implemented!</h1>", target: "main" },
+        Home: { component: "<section><h1>Home</h1><h3>Welcome to Bookdatasolutions!</h3></section>", target: "main" },
         Contact: { component: "<h1>Contact not Implemented!</h1>", target: "main" },
         Terms: { component: "<h1>Terms not Implemented!</h1>", target: "main" },
         Signon: { component: "<bds-signon/>", target: "bds-modal" },
@@ -75,6 +100,7 @@
         Register: { component: "<h1>Register not Implemented!</h1>", target: "main" },
         Workque: { component: `<bds-list list-hdr="My Workqueue" list-Items='${listItems}'></bds-list>`, target: "main" }
       };
+      document.querySelector("main").innerHTML = bdsComponents.Home.component;
       bdsNav.onclick = (e) => {
         // e.composedPath[0] => SPAN/IMG, e.composedPath[1] => A => works for both IMG and SPAN children
         const launch = e.composedPath()[1].id;
@@ -89,8 +115,6 @@
           }
         }
       };
-      ///////////////////////////////////////////////////////////////////////////////////////////
-
       ///////////////////////////////////////////////////////////////////////////////////////////
 
       // Idle time detection

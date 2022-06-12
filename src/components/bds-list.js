@@ -13,40 +13,33 @@ export class BDSList extends HTMLElement {
             list += `
                 <details>
                     <summary>${item.filename}</summary>
-                    <p>
+                    <div>
                         File Type: ${item.filetype}<br/>
                         File Size: ${item.filesize}<br/>
                         Loaded: ${item.loaded}
-                    </p>
+                    </div>
                 </details>
             `;
 
         })
         this.shadowRoot.innerHTML = `
             <style>
-                *, ::before, ::after {
-                    box-sizing: border-box;
-                }                
-                html {
-                    background-color: #cfd8dc;
-                }  
+  
                 h2 {
                     margin: 0;
                     text-align: center;
                 }
                 section {
-                    padding-top:1rem;             
                     width:90vw;
                 }              
                 details {   
-                    padding:0 1rem 0 1rem;             
+                    margin:0;           
                     border-bottom: 1px solid #78909c;
                     position: relative;
-                    /*color: #263238;*/
                     transition: background-color 0.25s;
                 }
-                    details > :last-child {
-                    margin-bottom: 1rem;
+                details > :last-child {
+                    margin-bottom: 0rem;
                 }                
                 details::before {
                     width: 100%;
@@ -60,21 +53,22 @@ export class BDSList extends HTMLElement {
                     transition: opacity 0.2s;
                     z-index: -1;
                 }
-                details[open] {
-                    background-color: #fff;
-                }
                 details[open]::before {
                     opacity: 0.6;
                 }            
                 summary {
-                    padding: 1rem 2rem;
+                    padding: 1rem 3rem;
                     display: block;
                     position: relative;
                     font-size: 1.25rem;
                     font-weight: bold;
                     cursor: pointer;
-                }            
+                }  
+                [open] summary {
+                    background-color: #eee;
+                }          
                 summary::before, summary::after {
+                    margin: 0 1rem 0 1rem;
                     width: 0.75rem;
                     height: 2px;
                     position: absolute;
@@ -97,12 +91,11 @@ export class BDSList extends HTMLElement {
                 }
                 details > :not(summary) {
                     padding: 1rem;
-                    margin:0;
                     background-color: #fff;
                     transform: scaleY(0);
                     transform-origin: top;
                     transition: transform 300ms;
-                    border-top: 0.1px solid lightgray;
+                    border: 0.1px solid lightgray;
                     /*box-shadow: 0 0.25em 0.5em #263238;*/
                 }
                 details[open] > :not(summary) {
