@@ -4,30 +4,68 @@ export class BDSList extends HTMLElement {
         this.attachShadow({ mode: "open" });
         this.bdslisthdr = this.getAttribute("list-hdr");
         this.bdslist = JSON.parse(this.getAttribute("list-items"));
-        console.log(this.bdslist);
+        console.log(this.bdslist);  
+        this.totalrecs = this.bdslist.length;
+        this.batchstart = 0;
     }
 
     connectedCallback() {
-        let list = "";
-        this.bdslist.forEach(item => {
-            list += `
-                <details>
-                    <summary>${item.filename}</summary>
-                    <div>
-                        File Type: ${item.filetype}<br/>
-                        File Size: ${item.filesize}<br/>
-                        Loaded: ${item.loaded}
-                    </div>
-                </details>
-            `;
+        const addContent = () => {
+            console.log(this.batchstart)
+            if (this.batchstart >= this.totalrecs)
+                return;
 
-        })
+            for (let i=this.batchstart; i<this.batchstart+10; i++){
+                const details = document.createElement('details');
+                const summary = document.createElement('summary');
+                summary.textContent = this.bdslist[i].filename;
+                const div = document.createElement('div');
+                div.innerHTML = `File Type: ${this.bdslist[i].filetype}<br/>File Size: ${this.bdslist[i].filesize}<br/>Loaded: 2022-06-20;`
+                details.appendChild(summary);
+                details.appendChild(div);
+                this.shadowRoot.appendChild(details);
+            }
+            this.batchstart += 10;
+        }        
+
+        let search = "";
+        search += `
+            <search>
+                <input type="search" placeholder="Search">
+                <button>GO</button>
+            </search>
+        `;
+
         this.shadowRoot.innerHTML = `
             <style>
   
                 h2 {
                     margin: 0;
                     text-align: center;
+                }
+                search {
+                    display: flex;
+                    justify-content: center;
+                }
+                search input[type=search]{
+                    box-sizing: border-box;
+                    background-image: url("../assets/search.png");
+                    background-position: 10px 10px;
+                    background-repeat: no-repeat;
+                    padding: 12px 20px 12px 40px;
+                    outline: none;
+                    width: 20%;
+                    transition: width 0.4s ease-in-out;
+                    border: none;
+                    border-bottom: 1px solid
+                }
+                search input[type=search]:focus{
+                    width: 33%;
+                }
+                search button {
+                    border: none;
+                    background: white;
+                    cursor: pointer;
                 }
                 section {
                     width:90vw;
@@ -90,7 +128,7 @@ export class BDSList extends HTMLElement {
                     display: none;
                 }
                 details > :not(summary) {
-                    padding: 1rem;
+                    padding: 1rem 3rem;
                     background-color: #fff;
                     transform: scaleY(0);
                     transform-origin: top;
@@ -104,9 +142,26 @@ export class BDSList extends HTMLElement {
             </style>
             <section>
                 <h2>${this.bdslisthdr}</h2>
-                ${list}
+                ${search}
             </section>
         `;
+
+        let options = {
+            root: document.querySelector('main'),
+            rootMargin: '0px',
+            threshold: 0.8
+          }
+        let handleIntersect = (entries, observer) => {
+            console.log(entries[0].intersectionRatio);
+            if (entries[0].intersectionRatio>0) {
+                setTimeout(() => {
+                addContent();
+            }, 2000);
+            }
+            
+        }
+        let observer = new IntersectionObserver(handleIntersect, options);
+        observer.observe(document.querySelector('#loading'));        
         //content:"🡒 "; 
         //content:"🡑 ";
     }

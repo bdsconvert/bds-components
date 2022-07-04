@@ -21,7 +21,7 @@
       width: 100%;
     }
 
-    main {
+    content {
       height: 75vh;
       margin: 1rem;
       overflow: scroll;
@@ -44,11 +44,30 @@
       display: grid;
       margin: 1rem;
     }
+    #loading {
+      display:block;
+      text-align: center;
+    }
+    #loading:after {
+      display: inline-block;
+      font-size: 2rem;
+      font-weight: bold;
+      animation: dotty steps(1,end) 1s infinite;
+      content: '';
+    }
+    @keyframes dotty {
+      0% {content:'....';}
+      20% {content:'.....';}
+      40% {content:'......';}
+      60% {content:'.......';}
+      80% {content:'........';}
+      100% {content:'....';}
+    }
   </style>
   <body> 
     <!-- <bds-idlewatch bds-idletimeout="10000" signedin="true"></bds-idlewatch> -->
     <header></header>
-    <main></main>
+    <main><content></content></main>
     <footer>Copyright 2022 - BookDataSolutions.com</footer>
     <bds-modal></bds-modal>
 <!-- --------------------------------------------------------------------------- -->
@@ -78,6 +97,7 @@
         {"filename": "Excelfile4.xlsx", "filetype":"Excel", "filesize":"8", "loaded":"${bdsDate(1655074238987)}"},
         {"filename": "Onixfile5.xml", "filetype":"Onix", "filesize":"10", "loaded":"${bdsDate(1655074238987)}"},
         {"filename": "Excelfile5.xlsx", "filetype":"Excel", "filesize":"20", "loaded":"${bdsDate(1655074238987)}"},
+        
         {"filename": "Onixfile6.xml", "filetype":"Onix", "filesize":"5", "loaded":"${bdsDate(1655074238987)}"},
         {"filename": "Excelfile6.xlsx", "filetype":"Excel", "filesize":"10", "loaded":"${bdsDate(1655074238987)}"},
         {"filename": "Onixfile7.xml", "filetype":"Onix", "filesize":"11", "loaded":"${bdsDate(1655074238987)}"},
@@ -87,27 +107,62 @@
         {"filename": "Onixfile9.xml", "filetype":"Onix", "filesize":"3", "loaded":"${bdsDate(1655074238987)}"},
         {"filename": "Excelfile9.xlsx", "filetype":"Excel", "filesize":"6", "loaded":"${bdsDate(1655074238987)}"},
         {"filename": "Onixfile10.xml", "filetype":"Onix", "filesize":"3", "loaded":"${bdsDate(1655074238987)}"},
-        {"filename": "Excelfile10.xlsx", "filetype":"Excel", "filesize":"3", "loaded":"${bdsDate()}"}
+        {"filename": "Excelfile10.xlsx", "filetype":"Excel", "filesize":"3", "loaded":"${bdsDate()}"},
+        
+        {"filename": "Onixfile21.xml", "filetype":"Onix", "filesize":"5", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile22.xlsx", "filetype":"Excel", "filesize":"10", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile23.xml", "filetype":"Onix", "filesize":"11", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile24.xlsx", "filetype":"Excel", "filesize":"22", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile25.xml", "filetype":"Onix", "filesize":"10", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile26.xlsx", "filetype":"Excel", "filesize":"20", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile27.xml", "filetype":"Onix", "filesize":"3", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile28.xlsx", "filetype":"Excel", "filesize":"6", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile29.xml", "filetype":"Onix", "filesize":"3", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile30.xlsx", "filetype":"Excel", "filesize":"3", "loaded":"${bdsDate()}"},
+        
+        {"filename": "Onixfile31.xml", "filetype":"Onix", "filesize":"5", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile32.xlsx", "filetype":"Excel", "filesize":"10", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile33.xml", "filetype":"Onix", "filesize":"11", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile34.xlsx", "filetype":"Excel", "filesize":"22", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile35.xml", "filetype":"Onix", "filesize":"10", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile36.xlsx", "filetype":"Excel", "filesize":"20", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile37.xml", "filetype":"Onix", "filesize":"3", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile38.xlsx", "filetype":"Excel", "filesize":"6", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile39.xml", "filetype":"Onix", "filesize":"3", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile40.xlsx", "filetype":"Excel", "filesize":"3", "loaded":"${bdsDate()}"},
+        
+        {"filename": "Onixfile41.xml", "filetype":"Onix", "filesize":"5", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile42.xlsx", "filetype":"Excel", "filesize":"10", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile43.xml", "filetype":"Onix", "filesize":"11", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile44.xlsx", "filetype":"Excel", "filesize":"22", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile45.xml", "filetype":"Onix", "filesize":"10", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile46.xlsx", "filetype":"Excel", "filesize":"20", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile47.xml", "filetype":"Onix", "filesize":"3", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile48.xlsx", "filetype":"Excel", "filesize":"6", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Onixfile49.xml", "filetype":"Onix", "filesize":"3", "loaded":"${bdsDate(1655074238987)}"},
+        {"filename": "Excelfile50.xlsx", "filetype":"Excel", "filesize":"3", "loaded":"${bdsDate()}"}
       ]`;
 
       document.querySelector("header").innerHTML = `<bds-nav id="bdsNav" nav-items='${navItems}' display="" logo="BookDataSolutions"></bds-nav>`;
       const bdsComponents = {
-        Home: { component: "<section><h1>Home</h1><h3>Welcome to Bookdatasolutions!</h3></section>", target: "main" },
-        Contact: { component: "<h1>Contact not Implemented!</h1>", target: "main" },
-        Terms: { component: "<h1>Terms not Implemented!</h1>", target: "main" },
+        Home: { component: "<section><h1>Home</h1><h3>Welcome to Bookdatasolutions!</h3></section>", target: "content" },
+        Contact: { component: "<h1>Contact not Implemented!</h1>", target: "content" },
+        Terms: { component: "<h1>Terms not Implemented!</h1>", target: "content" },
         Signon: { component: "<bds-signon/>", target: "bds-modal" },
-        Signoff: { component: "<h1>Your are now Logged off!</h1>", target: "main" },
-        Register: { component: "<h1>Register not Implemented!</h1>", target: "main" },
-        Workque: { component: `<bds-list list-hdr="My Workqueue" list-Items='${listItems}'></bds-list>`, target: "main" }
+        Signoff: { component: "<h1>Your are now Logged off!</h1>", target: "content" },
+        Register: { component: "<h1>Register not Implemented!</h1>", target: "content" },
+        Workque: { component: `<bds-list list-hdr="My Workqueue" list-Items='${listItems}'></bds-list><div id="loading"></div>`, target: "content" }
       };
-      document.querySelector("main").innerHTML = bdsComponents.Home.component;
+      document.querySelector("content").innerHTML = bdsComponents.Home.component;
       bdsNav.onclick = (e) => {
         // e.composedPath[0] => SPAN/IMG, e.composedPath[1] => A => works for both IMG and SPAN children
         const launch = e.composedPath()[1].id;
         if (bdsComponents[launch]) {
           const { component, target } = bdsComponents[launch];
+          console.log(target);
           document.querySelector(`${target}`).innerHTML = `${component}`;
-          if (target === "bds-modal") document.querySelector(`${target}`).open = true;
+          // if (target === "bds-modal") document.querySelector(`${target}`).open = true;
+          document.querySelector(`${target}`).open = true; // for modals
           if (component.indexOf("bds-signon") !== -1) {
             document.querySelector("bds-signon").addEventListener("bds-signon-submit", (e) => {
               console.log(e.detail.email, e.detail.pwd);
