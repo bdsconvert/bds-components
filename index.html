@@ -67,6 +67,7 @@
   <body> 
     <!-- <bds-idlewatch bds-idletimeout="10000" signedin="true"></bds-idlewatch> -->
     <header></header>
+    <search></search>
     <main><content></content></main>
     <footer>Copyright 2022 - BookDataSolutions.com</footer>
     <bds-modal></bds-modal>
@@ -77,13 +78,13 @@
       }
       ///////////////////////////////////////////////////////////////////////////////////////////
       const navItems = `[
-        {"item":"Home","icon":"../assets/home.png"},
-        {"item":"Contact","icon":"../assets/contact.png"},
-        {"item":"Terms","icon":"../assets/terms.png"},
-        {"item":"Signon","icon":"../assets/signon.png"},
-        {"item":"Signoff","icon":"../assets/signout.png"},
-        {"item":"Register","icon":"../assets/register.png"},
-        {"item":"Workque","icon":"../assets/home.png"}
+        {"item":"Home","icon":"../assets/home.png", "display":"all"},
+        {"item":"Contact","icon":"../assets/contact.png", "display":"all"},
+        {"item":"Terms","icon":"../assets/terms.png", "display":"all"},
+        {"item":"Signon","icon":"../assets/signon.png", "display":"signedoff"},
+        {"item":"Signoff","icon":"../assets/signout.png", "display":"signedin"},
+        {"item":"Register","icon":"../assets/register.png", "display":"signedoff"},
+        {"item":"Workque","icon":"../assets/home.png", "display":"signedin"}
       ]`;
 
       const listItems = `[
@@ -143,7 +144,7 @@
         {"filename": "Excelfile50.xlsx", "filetype":"Excel", "filesize":"3", "loaded":"${bdsDate()}"}
       ]`;
 
-      document.querySelector("header").innerHTML = `<bds-nav id="bdsNav" nav-items='${navItems}' display="" logo="BookDataSolutions"></bds-nav>`;
+      document.querySelector("header").innerHTML = `<bds-nav id="bdsNav" nav-items='${navItems}' display="" logo="BookDataSolutions" loggedin="true"></bds-nav>`;
       const bdsComponents = {
         Home: { component: "<section><h1>Home</h1><h3>Welcome to Bookdatasolutions!</h3></section>", target: "content" },
         Contact: { component: "<h1>Contact not Implemented!</h1>", target: "content" },
@@ -179,6 +180,7 @@
     <script type="module" src="src/components/bds-nav.js"></script>
     <script type="module" src="src/components/bds-modal.js"></script>
     <script type="module" src="src/components/bds-signon.js"></script>
+    <script type="module" src="src/components/bds-search.js"></script>
     <script type="module" src="src/components/bds-list.js"></script>
   </body>
 </html>

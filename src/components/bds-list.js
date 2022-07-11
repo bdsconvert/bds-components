@@ -1,3 +1,4 @@
+import {BDSSearch} from './bds-search.js';
 export class BDSList extends HTMLElement {
     constructor() {
         super();
@@ -28,44 +29,12 @@ export class BDSList extends HTMLElement {
             this.batchstart += 10;
         }        
 
-        let search = "";
-        search += `
-            <search>
-                <input type="search" placeholder="Search">
-                <button>GO</button>
-            </search>
-        `;
-
         this.shadowRoot.innerHTML = `
             <style>
   
                 h2 {
                     margin: 0;
                     text-align: center;
-                }
-                search {
-                    display: flex;
-                    justify-content: center;
-                }
-                search input[type=search]{
-                    box-sizing: border-box;
-                    background-image: url("../assets/search.png");
-                    background-position: 10px 10px;
-                    background-repeat: no-repeat;
-                    padding: 12px 20px 12px 40px;
-                    outline: none;
-                    width: 20%;
-                    transition: width 0.4s ease-in-out;
-                    border: none;
-                    border-bottom: 1px solid
-                }
-                search input[type=search]:focus{
-                    width: 33%;
-                }
-                search button {
-                    border: none;
-                    background: white;
-                    cursor: pointer;
                 }
                 section {
                     width:90vw;
@@ -141,8 +110,8 @@ export class BDSList extends HTMLElement {
                 }
             </style>
             <section>
-                <h2>${this.bdslisthdr}</h2>
-                ${search}
+                <!-- <h2>${this.bdslisthdr}</h2> -->
+                <bds-search />
             </section>
         `;
 

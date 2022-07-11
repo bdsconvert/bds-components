@@ -5,15 +5,20 @@ export class BDSNav extends HTMLElement {
     this.bdsnav = JSON.parse(this.getAttribute("nav-items"));
     this.display = this.getAttribute("display");
     this.logo = this.getAttribute("logo");
+    this.loggedin = this.getAttribute("loggedin");
   }
   connectedCallback() {
     // const { shadowRoot } = this;
+    const showsearch = this.loggedin === 'true' ? `visible` : 'hidden';
+  
     let navlist = ``;
     this.bdsnav.forEach((list) => {
-      const labels = `<span>${list.item}</span>`;
-      const icons = `<img src="${list.icon}">`;
-      const menudisplay = this.display === "labels" ? labels : this.display === "icons" ? icons : `${icons}${labels}`;
-      navlist += `<li><a href="#" id=${list.item} title="${list.item}">${menudisplay}</span></a></li>`;
+      if (list.display === "all" || (list.display === "signedin" && this.loggedin === "true") || (list.display === "signedoff" && this.loggedin !== "true")) { 
+        const labels = `<span>${list.item}</span>`;
+        const icons = `<img src="${list.icon}">`;
+        const menudisplay = this.display === "labels" ? labels : this.display === "icons" ? icons : `${icons}${labels}`;
+        navlist += `<li><a href="#" id=${list.item} title="${list.item}">${menudisplay}</a></li>`;
+      }
     });
     //rgba(85, 214, 170, 0.85)
     this.shadowRoot.innerHTML = `
@@ -22,20 +27,50 @@ export class BDSNav extends HTMLElement {
           --background: #288;
         }
         header {
+          box-sizing: border-box;
           background: var(--background);
           text-align: center;
           position:relative;
           width: 100%;
           padding: 0.1rem 1rem 0.1rem 1rem;
           z-index: 999;
+          display:grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          align-items: center;
+          gap: 4px;
         }
         .logo {
-          color:whitesmoke;
+          color: whitesmoke;
+          font-wight: bold;
+          font-size: 2rem;
         }
+        search {
+          display: flex;
+          visibility:${showsearch};
+          justify-content: right;
+          margin: 1rem 0;
+        }
+        search input[type=search]{
+          background-image: url("../assets/search.png");
+          background-position: 10px 4px;
+          background-repeat: no-repeat;
+          padding-left: 40px;
+          outline: none;
+          width: 5%;
+          transition: width 0.4s ease-in-out;
+          border: none;
+          height: 1.75rem;
+          border-radius: 4px;
+        }
+        search input[type=search]:focus{
+          width: 75%;
+        }
+    
         nav {
           position: absolute;
           text-align: left;
           left: 0;
+          top: 4rem;
           background: var(--background);
           transform: scale(1,0);
           transform: translateX(-100%);
@@ -92,7 +127,7 @@ export class BDSNav extends HTMLElement {
         }
         .menu-label {
           display: flex;
-          position: absolute;
+          position: relative;
           top: 0;
           left: 0;
           margin-left: 1rem;
@@ -105,56 +140,81 @@ export class BDSNav extends HTMLElement {
           display: block;
           background: white;
           height: 2px;
-          width: 1.5rem;
+          width: 1.25rem;
           border-radius: 2px;
-          position-relative;
+          position: relative;
         }
         .menu-label span::before,
         .menu-label span::after {
           content: '';
-          position: absolute;
+          position:absolute;
         }
         .menu-label span::before {
-          bottom: 2.25rem;
+          bottom: 0.3rem;
         }
         .menu-label span::after {
-          top: 2.25rem;
+          top: 0.3rem;
         }
 
-        @media screen and (min-width: 800px) {
+      @media screen and (min-width: 900px) {
           .menu-label {
             display: none;
           }
           header {
+            box-sizing: border-box;
             display: grid;
-            grid-template-columns: auto;
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 4px;
           }
           .logo {
-            grid-column: 1 / 2;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             color:whitesmoke;
+            font-wight: bold;
+            font-size: 2rem;
+            margin-left 0;
+            margin-right:1.5rem;
           }
+          search {
+            display: flex;
+            visibility:${showsearch};
+            justify-content: center;
+            margin: 1rem 0;
+          }
+          search input[type=search]{
+            background-image: url("../assets/search.png");
+            background-position: 10px 4px;
+            background-repeat: no-repeat;
+            padding-left: 40px;
+            outline: none;
+            width: 5%;
+            transition: width 0.4s ease-in-out;
+            border: none;
+            height: 1.75rem;
+            border-radius: 4px;
+          }
+          search input[type=search]:focus{
+            width: 100%;
+          }
+
           nav {
             all: unset;
             display: flex;
-            grid-column: 2 / 4;
-            justify-content: flex-end;
-            align-items: center;
-            padding-right:1rem;
+            justify-content: right;
           }
           nav a {
             opacity: 1;
             position: relative;
             text-transform: uppercase;
             font-size: 0.8rem;
+            margin:-0.25rem;
           }
           nav ul {
             display: flex;
+            margin:0 1rem;
           }
           nav li {
-            margin-bottom: 0;
-            border: none;
+            margin:-0.25rem;;
           }
           nav li:last-child {
             border-bottom: none;
@@ -178,20 +238,27 @@ export class BDSNav extends HTMLElement {
             display: block;
             margin-top: 0.5rem;
           }
-        }
+      }
       </style>
-      <header>
-        <h1 class="logo">${this.logo}</h1>
+        <header>
         <input type="checkbox" class="menu" id="menu">
-        <label for="menu" class="menu-label"<span><span></label>
+        <label for="menu" class="menu-label"><span/><span/></label>
+      
+        <span class="logo">${this.logo}</span>
+        <search><input type="search" placeholder="Search My Workqueue"></search>
         <nav>
           <ul>
             ${navlist}
           </ul>
         </nav>
-      </header>
-    `;
-    //<label for="menu" class="menu-label">☰</label>
+        </header>
+      `;
+     // <search><input type="search" placeholder="Search My Workqueue"></search>
+
+      // <h1 class="logo">${this.logo}</h1>
+      // <input type="search" placeholder="Search My Workqueue">
+      //<label for="menu" class="menu-label"><span/><span/></label>
+      //<label for="menu" class="menu-label">☰</label>
     //grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
 
     this.shadowRoot.addEventListener("click", (e) => {
