@@ -3,11 +3,12 @@ export class BDSNav extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
     this.bdsnav = JSON.parse(this.getAttribute("nav-items"));
-    this.display = this.getAttribute("display");
     this.logo = this.getAttribute("logo");
     this.loggedin = this.getAttribute("loggedin");
   }
-  connectedCallback() {
+
+  render() {
+    //console.log(this.loggedin);
     // const { shadowRoot } = this;
     const showsearch = this.loggedin === 'true' ? `visible` : 'hidden';
   
@@ -20,7 +21,7 @@ export class BDSNav extends HTMLElement {
         navlist += `<li><a href="#" id=${list.item} title="${list.item}">${menudisplay}</a></li>`;
       }
     });
-    //rgba(85, 214, 170, 0.85)
+    
     this.shadowRoot.innerHTML = `
       <style>
         :host {
@@ -242,8 +243,7 @@ export class BDSNav extends HTMLElement {
       </style>
         <header>
         <input type="checkbox" class="menu" id="menu">
-        <label for="menu" class="menu-label"><span/><span/></label>
-      
+        <label for="menu" class="menu-label"><span/><span/></label>      
         <span class="logo">${this.logo}</span>
         <search><input type="search" placeholder="Search My Workqueue"></search>
         <nav>
@@ -260,13 +260,29 @@ export class BDSNav extends HTMLElement {
       //<label for="menu" class="menu-label"><span/><span/></label>
       //<label for="menu" class="menu-label">☰</label>
     //grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
+  }
 
+  connectedCallback() {
+    // if (!this.rendered) {
+    //   //this.render();
+    //   this.rendered = true;
+    // }
+    
     this.shadowRoot.addEventListener("click", (e) => {
       if (e.composedPath()[1].id) {
         // tag <a> has the id
         this.shadowRoot.getElementById("menu").checked = false; // close sidebar when the menu item is selected
       }
     });
+  }
+
+  static get observedAttributes() {
+    return ["nav-items", "logo", "loggedin"];
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    this.loggedin = newValue;
+    this.render();
   }
 }
 window.customElements.define("bds-nav", BDSNav);

@@ -144,7 +144,6 @@
         {"filename": "Excelfile50.xlsx", "filetype":"Excel", "filesize":"3", "loaded":"${bdsDate()}"}
       ]`;
 
-      document.querySelector("header").innerHTML = `<bds-nav id="bdsNav" nav-items='${navItems}' display="" logo="BookDataSolutions" loggedin="true"></bds-nav>`;
       const bdsComponents = {
         Home: { component: "<section><h1>Home</h1><h3>Welcome to Bookdatasolutions!</h3></section>", target: "content" },
         Contact: { component: "<h1>Contact not Implemented!</h1>", target: "content" },
@@ -154,23 +153,36 @@
         Register: { component: "<h1>Register not Implemented!</h1>", target: "content" },
         Workque: { component: `<bds-list list-hdr="My Workqueue" list-Items='${listItems}'></bds-list><div id="loading"></div>`, target: "content" }
       };
+
+      document.querySelector("header").innerHTML = `<bds-nav id="bdsNav" nav-items='${navItems}' logo="BookDataSolutions" loggedin="false"></bds-nav>`;
       document.querySelector("content").innerHTML = bdsComponents.Home.component;
       bdsNav.onclick = (e) => {
-        // e.composedPath[0] => SPAN/IMG, e.composedPath[1] => A => works for both IMG and SPAN children
-        const launch = e.composedPath()[1].id;
+        const launch = e.composedPath()[1].id;  // e.composedPath[0] => SPAN/IMG, e.composedPath[1] => A => works for both IMG and SPAN children
+        console.log(`ComposedPath => ${launch}`);
         if (bdsComponents[launch]) {
           const { component, target } = bdsComponents[launch];
-          console.log(target);
           document.querySelector(`${target}`).innerHTML = `${component}`;
           // if (target === "bds-modal") document.querySelector(`${target}`).open = true;
           document.querySelector(`${target}`).open = true; // for modals
+
+          // Event Listeners
+          // Signoff
+          if (launch === "Signoff") {
+            bdsNav.setAttribute("loggedin", "false");          
+          }
+          // SIgnon
           if (component.indexOf("bds-signon") !== -1) {
             document.querySelector("bds-signon").addEventListener("bds-signon-submit", (e) => {
-              console.log(e.detail.email, e.detail.pwd);
+              console.log(e.detail.email, e.detail.pwd);  
+              bdsNav.setAttribute("loggedin", "true");          
+              document.querySelector(`${bdsComponents.Workque.target}`).innerHTML = `${bdsComponents.Workque.component}`;
+              document.querySelector(`${target}`).open = false; 
             });
           }
         }
       };
+      
+
       ///////////////////////////////////////////////////////////////////////////////////////////
 
       // Idle time detection

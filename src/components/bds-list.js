@@ -5,7 +5,7 @@ export class BDSList extends HTMLElement {
         this.attachShadow({ mode: "open" });
         this.bdslisthdr = this.getAttribute("list-hdr");
         this.bdslist = JSON.parse(this.getAttribute("list-items"));
-        console.log(this.bdslist);  
+        //console.log(this.bdslist);  
         this.totalrecs = this.bdslist.length;
         this.batchstart = 0;
     }
@@ -32,7 +32,7 @@ export class BDSList extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <style>
   
-                h2 {
+                h2,h3,h4 {
                     margin: 0;
                     text-align: center;
                 }
@@ -110,8 +110,7 @@ export class BDSList extends HTMLElement {
                 }
             </style>
             <section>
-                <!-- <h2>${this.bdslisthdr}</h2> -->
-                <bds-search />
+                <h3>${this.bdslisthdr}</h3>
             </section>
         `;
 
