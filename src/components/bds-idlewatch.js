@@ -5,17 +5,19 @@ export class BDSIdlewatch extends HTMLElement {
     const idletimeout = this.getAttribute("bds-idletimeout");
     let countdown = 60;
     let intrvlid;
-
-    if (signedin === "true") setIdleTimer(onIdle, () => {});
+console.log(signedin)    
+    if (this.signedin === "true") setIdleTimer(onIdle, () => {});
 
     function onIdle() {
-      document.querySelector("bds-modal").innerHTML = `
-      <h2>Session Timed Out!</h2>
-      <h3>Close this Modal to Extend the Session?</h3>
-      <h1>Will Logoff in <span id="countdown">${countdown}</span> Secs!</h1>
+      bdsModal.innerHTML = `
+      <h2>Session Timed Out!</h2><br/>
+      <h3>Close this Window to Extend the Session?</h3><br/>
+      <h2>Will Logoff in <span id="countdown">${this.countdown}</span> Secs!</h2>
     `;
-      document.querySelector("bds-modal").open = true;
-      document.querySelector("bds-nav").style.pointerEvents = "none";
+      //document.querySelector("bds-modal").open = true;
+      //document.querySelector("bds-nav").style.pointerEvents = "none";
+      bdsModal.open = true;
+      bdsNav.style.pointerEvents = "none";
       // setup countdown logoff interval timer
       if (!intrvlid) {
         countdown = 10;
@@ -25,10 +27,10 @@ export class BDSIdlewatch extends HTMLElement {
             signedin = "false";
             clearInterval(intrvlid);
             intrvlid = null;
-            document.querySelector("bds-modal").open = false;
+            bdsModal.open = false;
             //setIdleTimer(onIdle, () => {});
-            document.querySelector("main").innerHTML =
-              "<h1>You are now logged off due to inactivity!</h1>";
+            bdsContent.innerHTML = "<br/><h2>You are now logged off due to inactivity!</h2>";
+            bdsNav.setAttribute("loggedin", "false");          
           }
         }, 1000);
       }
@@ -74,16 +76,26 @@ export class BDSIdlewatch extends HTMLElement {
     }
 
     // Reset Idle Timer when IdleTimer modal is closed.
-    document
-      .querySelector("bds-modal")
-      .addEventListener("bds-modal-closed", (e) => {
+    //document.querySelector("bds-modal")
+      bdsModal.addEventListener("bds-modal-closed", (e) => {
         console.log("BDSModal Closed - Restarting Idle Timer...", signedin);
-        document.querySelector("bds-nav").style.pointerEvents = "auto";
+        bdsNav.style.pointerEvents = "auto";
         if (signedin === "true") setIdleTimer(onIdle, () => {});
-        clearInterval(intrvlid);
+        clearInterval(this.intrvlid);
         intrvlid = null;
       });
+
+      // function observedAttributes() {
+      //   return ["signedin"];
+      // }
+    
+      // function attributeChangedCallback(name, oldValue, newValue) {
+      //   signedin = newValue;
+      //   if (signedin === "true") this.setIdleTimer(onIdle, () => {});
+      // }
+    
   } // constructor end
+
   disconnectedCallback() {
     clearInterval(this.intrvlid);
     this.intrvlid = null;

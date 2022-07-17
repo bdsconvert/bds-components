@@ -54,6 +54,7 @@ export class BDSModal extends HTMLElement {
         padding: 1rem;
         position: fixed;
         top: 100px;
+        border-radius: 4px;
       }
       button {
         all: unset;

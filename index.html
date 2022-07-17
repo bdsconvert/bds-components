@@ -65,14 +65,48 @@
     }
   </style>
   <body> 
-    <!-- <bds-idlewatch bds-idletimeout="10000" signedin="true"></bds-idlewatch> -->
+    <div  id="bdsIdlewatch"></div>
     <header></header>
     <search></search>
-    <main><content></content></main>
+    <main><content id="bdsContent"></content></main>
     <footer>Copyright 2022 - BookDataSolutions.com</footer>
-    <bds-modal></bds-modal>
+    <bds-modal id="bdsModal"></bds-modal>
 <!-- --------------------------------------------------------------------------- -->
     <script>
+      // if ('requestIdleCallback' in window) {
+      //   // Use requestIdleCallback to schedule work.
+      //   console.log("requestIdleCallback is available")
+      //   requestIdleCallback(myIdleTimer);
+      // } 
+      // function myIdleTimer(deadline) {
+      //   while (deadline.timeRemaining() > 0) {
+      //     console.log("Running...");
+      //     if (deadline.timeRemaining() === 0)
+      //       console.log("Completed!");
+      //   }
+      // }
+      let timeout = 1;
+      const onIdle = () => {
+        bdsNav.setAttribute("loggedin", "false"); 
+        IdleTimer("stop");
+        console.log("Your time is up!!!");
+        clearTimeout(timeout);
+        timeout = 0;
+        console.log("Idle detected: Removing idle timer!!!")
+        bdsContent.innerHTML = "<br/><h2>You are now logged off due to inactivity!</h2>";
+      }
+      const onActivity = () => {
+        console.log("Activity detected: Resetting idle timer!!!")
+        clearTimeout(timeout);
+        timeout = setTimeout(onIdle, 10000);
+      }
+      const IdleTimer = (startstop) => {
+        clearTimeout(timeout);
+        ["click", "mousemove" , "keypress", "scroll"].forEach((event) => {
+          startstop === 'start' ? document.addEventListener(event, onActivity) : document.removeEventListener(event, onActivity); 
+        });
+      }
+
       const bdsDate = (dt) => {
         return dt ? new Date(dt).toISOString() : new Date().toISOString();
       }
@@ -168,15 +202,19 @@
           // Event Listeners
           // Signoff
           if (launch === "Signoff") {
-            bdsNav.setAttribute("loggedin", "false");          
+            bdsNav.setAttribute("loggedin", "false"); 
+            //bdsIdlewatch.innerHTML = `<bds-idlewatch id="bdsIdlewatch" bds-idletimeout="10000" signedin="false"></bds-idlewatch>`;  
+            IdleTimer("stop");    
           }
-          // SIgnon
+          // Signon
           if (component.indexOf("bds-signon") !== -1) {
             document.querySelector("bds-signon").addEventListener("bds-signon-submit", (e) => {
               console.log(e.detail.email, e.detail.pwd);  
               bdsNav.setAttribute("loggedin", "true");          
               document.querySelector(`${bdsComponents.Workque.target}`).innerHTML = `${bdsComponents.Workque.component}`;
               document.querySelector(`${target}`).open = false; 
+              //bdsIdlewatch.innerHTML = `<bds-idlewatch id="bdsIdlewatch" bds-idletimeout="10000" signedin="true"></bds-idlewatch>`;
+              IdleTimer("start");
             });
           }
         }
