@@ -8,8 +8,6 @@ export class BDSNav extends HTMLElement {
   }
 
   render() {
-    //console.log(this.loggedin);
-    // const { shadowRoot } = this;
     const showsearch = this.loggedin === 'true' ? `visible` : 'hidden';
   
     let navlist = ``;
@@ -253,20 +251,14 @@ export class BDSNav extends HTMLElement {
         </nav>
         </header>
       `;
-     // <search><input type="search" placeholder="Search My Workqueue"></search>
-
-      // <h1 class="logo">${this.logo}</h1>
-      // <input type="search" placeholder="Search My Workqueue">
-      //<label for="menu" class="menu-label"><span/><span/></label>
       //<label for="menu" class="menu-label">☰</label>
-    //grid-template-columns: 1fr auto minmax(600px, 3fr) 1fr;
   }
 
   connectedCallback() {
-    // if (!this.rendered) {
-    //   //this.render();
-    //   this.rendered = true;
-    // }
+    if (!this.rendered) {
+      this.render();
+      this.rendered = true;
+    }
     
     this.shadowRoot.addEventListener("click", (e) => {
       if (e.composedPath()[1].id) {

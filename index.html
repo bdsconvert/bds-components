@@ -65,7 +65,7 @@
     }
   </style>
   <body> 
-    <div  id="bdsIdlewatch"></div>
+    <bds-idlewatch id="bdsIdlewatch" bds-idletimeout="10000" startstop=""></bds-idlewatch>
     <header></header>
     <search></search>
     <main><content id="bdsContent"></content></main>
@@ -73,40 +73,6 @@
     <bds-modal id="bdsModal"></bds-modal>
 <!-- --------------------------------------------------------------------------- -->
     <script>
-      // if ('requestIdleCallback' in window) {
-      //   // Use requestIdleCallback to schedule work.
-      //   console.log("requestIdleCallback is available")
-      //   requestIdleCallback(myIdleTimer);
-      // } 
-      // function myIdleTimer(deadline) {
-      //   while (deadline.timeRemaining() > 0) {
-      //     console.log("Running...");
-      //     if (deadline.timeRemaining() === 0)
-      //       console.log("Completed!");
-      //   }
-      // }
-      let timeout = 1;
-      const onIdle = () => {
-        bdsNav.setAttribute("loggedin", "false"); 
-        IdleTimer("stop");
-        console.log("Your time is up!!!");
-        clearTimeout(timeout);
-        timeout = 0;
-        console.log("Idle detected: Removing idle timer!!!")
-        bdsContent.innerHTML = "<br/><h2>You are now logged off due to inactivity!</h2>";
-      }
-      const onActivity = () => {
-        console.log("Activity detected: Resetting idle timer!!!")
-        clearTimeout(timeout);
-        timeout = setTimeout(onIdle, 10000);
-      }
-      const IdleTimer = (startstop) => {
-        clearTimeout(timeout);
-        ["click", "mousemove" , "keypress", "scroll"].forEach((event) => {
-          startstop === 'start' ? document.addEventListener(event, onActivity) : document.removeEventListener(event, onActivity); 
-        });
-      }
-
       const bdsDate = (dt) => {
         return dt ? new Date(dt).toISOString() : new Date().toISOString();
       }
@@ -192,7 +158,7 @@
       document.querySelector("content").innerHTML = bdsComponents.Home.component;
       bdsNav.onclick = (e) => {
         const launch = e.composedPath()[1].id;  // e.composedPath[0] => SPAN/IMG, e.composedPath[1] => A => works for both IMG and SPAN children
-        console.log(`ComposedPath => ${launch}`);
+        //console.log(`ComposedPath => ${launch}`);
         if (bdsComponents[launch]) {
           const { component, target } = bdsComponents[launch];
           document.querySelector(`${target}`).innerHTML = `${component}`;
@@ -203,8 +169,7 @@
           // Signoff
           if (launch === "Signoff") {
             bdsNav.setAttribute("loggedin", "false"); 
-            //bdsIdlewatch.innerHTML = `<bds-idlewatch id="bdsIdlewatch" bds-idletimeout="10000" signedin="false"></bds-idlewatch>`;  
-            IdleTimer("stop");    
+            bdsIdlewatch.setAttribute("startstop", "stop");
           }
           // Signon
           if (component.indexOf("bds-signon") !== -1) {
@@ -213,14 +178,18 @@
               bdsNav.setAttribute("loggedin", "true");          
               document.querySelector(`${bdsComponents.Workque.target}`).innerHTML = `${bdsComponents.Workque.component}`;
               document.querySelector(`${target}`).open = false; 
-              //bdsIdlewatch.innerHTML = `<bds-idlewatch id="bdsIdlewatch" bds-idletimeout="10000" signedin="true"></bds-idlewatch>`;
-              IdleTimer("start");
+              bdsIdlewatch.setAttribute("startstop", "start");
             });
           }
         }
       };
       
-
+      bdsIdlewatch.addEventListener("bds-timedoff", (e) => {
+        bdsNav.setAttribute("loggedin", "false"); 
+        bdsContent.innerHTML = `<section><h1>Home</h1><h3>Welcome to Bookdatasolutions!</h3></section>`;
+        bdsModal.innerHTML = `<br/><br/><h2>You are now logged off due to inactivity!</h2><br/><h3>Please login back to view your workque</h3>`;
+        bdsModal.open = true;
+      });
       ///////////////////////////////////////////////////////////////////////////////////////////
 
       // Idle time detection

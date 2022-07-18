@@ -21,8 +21,6 @@ export class BDSSignon extends HTMLElement {
 
     this.addEventListener("submit", (e) => {
       e.preventDefault();
-      console.log("Login Submitted!");
-      //new CustomEvent("bds-signon-submit");
       this.dispatchEvent(new CustomEvent("bds-signon-submit", { detail: { email: e.target.email.value, pwd: e.target.password.value } }));
     });
   }

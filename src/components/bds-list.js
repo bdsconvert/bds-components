@@ -12,7 +12,7 @@ export class BDSList extends HTMLElement {
 
     connectedCallback() {
         const addContent = () => {
-            console.log(this.batchstart)
+            //console.log(this.batchstart)
             if (this.batchstart >= this.totalrecs)
                 return;
 
@@ -120,11 +120,9 @@ export class BDSList extends HTMLElement {
             threshold: 0.8
           }
         let handleIntersect = (entries, observer) => {
-            console.log(entries[0].intersectionRatio);
+            //console.log(entries[0].intersectionRatio);
             if (entries[0].intersectionRatio>0) {
-                setTimeout(() => {
-                addContent();
-            }, 2000);
+                setTimeout(() => {addContent();}, 2000);
             }
             
         }

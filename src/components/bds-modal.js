@@ -113,7 +113,7 @@ export class BDSModal extends HTMLElement {
       this.open = false;
     }
     const closeEvent = new CustomEvent("bds-modal-closed");
-    console.log("bds-modal-closed event dispatched");
+    //console.log("bds-modal-closed event dispatched");
     this.dispatchEvent(closeEvent);
   }
 

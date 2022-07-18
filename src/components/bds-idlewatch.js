@@ -1,37 +1,35 @@
 export class BDSIdlewatch extends HTMLElement {
   constructor() {
     super();
-    let signedin = this.getAttribute("signedin");
-    const idletimeout = this.getAttribute("bds-idletimeout");
-    const onIdle = () => {
-      bdsNav.setAttribute("loggedin", "false"); 
-      IdleTimer("stop");
-      console.log("Your time is up!!!");
-      clearTimeout(timeout);
-      timeout = 0;
+    this.idletimeout = this.getAttribute("bds-idletimeout");
+    this.timeout;
+
+    this.onIdle = () => {
+      this.IdleTimer("stop");
+      clearTimeout(this.timeout);
       console.log("Idle detected: Removing idle timer!!!")
-      bdsContent.innerHTML = "<br/><h2>You are now logged off due to inactivity!</h2>";
+      this.dispatchEvent(new CustomEvent("bds-timedoff", {}));
     }
-    const onActivity = () => {
-      console.log("Activity detected: Resetting idle timer!!!")
-      clearTimeout(timeout);
-      timeout = setTimeout(onIdle, idletimeout);
+    this.onActivity = () => {
+      console.log(`Activity detected: Resetting idle timer!!!", ${this.idletimeout/1000} secs`);
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(this.onIdle, this.idletimeout);
     }  
-    const IdleTimer = (startstop) => {
-      clearTimeout(timeout);
+    this.IdleTimer = (startstop) => {
+      clearTimeout(this.timeout);
+      console.log(`${startstop} - Idle Timer!`);
       ["click", "mousemove" , "keypress", "scroll"].forEach((event) => {
-        startstop === 'start' ? document.addEventListener(event, onActivity) : document.removeEventListener(event, onActivity); 
+        startstop === 'start' 
+          ? document.addEventListener(event, this.onActivity) 
+          : document.removeEventListener(event, this.onActivity); 
       });
     }
-  }
-  
+}    
   static get observedAttributes() {
-    return ["signedin"]; // array of attr to observe for changes
+    return ["startstop"]; // array of attr to observe for changes
   }
   attributeChangedCallback(attrName, oldValue, newValue) {
-    if (attrName === "signedin") {
-      newValue === "true" ? IdleTimer("start") : IdleTimer("stop");
-    }
+      attrName === "startstop" && newValue !== "" ? this.IdleTimer(`${newValue}`) : null;
   }
 
 } // class end
